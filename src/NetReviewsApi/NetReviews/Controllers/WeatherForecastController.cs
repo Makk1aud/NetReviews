@@ -1,9 +1,10 @@
+using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NetReviews.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
@@ -13,9 +14,16 @@ public class WeatherForecastController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IDbContext dbContext)
     {
+        
         _logger = logger;
+    }
+
+    [HttpGet("ping")]
+    public IActionResult Ping()
+    {
+        return Ok("pong");  
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
