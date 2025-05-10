@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetReviews", "NetReviewsApi\NetReviews\NetReviews.csproj", "{10520DC4-750D-45A6-A198-B1C2564885D7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entities", "Entities", "{6675180C-73D9-4F10-92DB-61246C1E79C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{6675180C-73D9-4F10-92DB-61246C1E79C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "NetReviewsApi\Entities\Entities.csproj", "{DC37CD68-E473-4A4D-A022-CA4768C1AA68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "NetReviewsApi\Domain\Domain.csproj", "{DC37CD68-E473-4A4D-A022-CA4768C1AA68}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{74CFABF1-DECC-4630-A9F4-E55F2B2254CE}"
 EndProject

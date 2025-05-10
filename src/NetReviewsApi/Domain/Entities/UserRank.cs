@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities;
+namespace Domain.Entities;
 
 public class UserRank
 {

@@ -25,7 +25,7 @@ namespace DataAccess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Entities.User", b =>
+            modelBuilder.Entity("Domain.User", b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.UserRank", b =>
+            modelBuilder.Entity("Domain.UserRank", b =>
                 {
                     b.Property<Guid>("UserRankId")
                         .ValueGeneratedOnAdd()
@@ -77,9 +77,9 @@ namespace DataAccess.Migrations
                     b.ToTable("UserRanks", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.User", b =>
+            modelBuilder.Entity("Domain.User", b =>
                 {
-                    b.HasOne("Entities.UserRank", "UserRank")
+                    b.HasOne("Domain.UserRank", "UserRank")
                         .WithMany("Users")
                         .HasForeignKey("UserRankId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -88,7 +88,7 @@ namespace DataAccess.Migrations
                     b.Navigation("UserRank");
                 });
 
-            modelBuilder.Entity("Entities.UserRank", b =>
+            modelBuilder.Entity("Domain.UserRank", b =>
                 {
                     b.Navigation("Users");
                 });

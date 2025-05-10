@@ -1,5 +1,6 @@
 using DataAccess.Interfaces;
-using Entities;
+using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess;
@@ -8,6 +9,7 @@ public class NetReviewsContext : DbContext, IDbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<UserRank> UserRanks { get; set; }
+    public DbSet<Author> Authors { get; set; }
 
     public NetReviewsContext(DbContextOptions<NetReviewsContext> options) 
         : base(options) { }
@@ -49,6 +51,24 @@ public class NetReviewsContext : DbContext, IDbContext
         modelBuilder.Entity<UserRank>()
             .Property(x => x.Description)
             .HasMaxLength(100)
+            .IsRequired();
+        
+        //Configure Author table
+        modelBuilder.Entity<Author>().ToTable("Authors");
+        
+        modelBuilder.Entity<Author>().HasKey(x => x.AuthorId);
+
+        modelBuilder.Entity<Author>()
+            .Property(x => x.FirstName)
+            .IsRequired()
+            .HasMaxLength(30);
+        
+        modelBuilder.Entity<Author>()
+            .Property(x => x.LastName)
+            .HasMaxLength(30);
+
+        modelBuilder.Entity<Author>()
+            .Property(x => x.Birthday)
             .IsRequired();
     }
 }

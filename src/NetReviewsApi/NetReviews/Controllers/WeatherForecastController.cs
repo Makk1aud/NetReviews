@@ -13,16 +13,20 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly IDbContext _dbContext;
 
     public WeatherForecastController(ILogger<WeatherForecastController> logger, IDbContext dbContext)
     {
-        
         _logger = logger;
+        _dbContext = dbContext;
     }
 
     [HttpGet("ping")]
-    public IActionResult Ping()
+    public async Task<IActionResult> Ping(CancellationToken cancellationToken)
     {
+        _dbContext.UserRanks.Add(new() { Description = "Новый", Title = "Новый Title" });
+        
+        await _dbContext.SaveChangesAsync(cancellationToken);
         return Ok("pong");  
     }
 
