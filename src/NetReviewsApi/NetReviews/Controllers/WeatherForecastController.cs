@@ -1,4 +1,6 @@
 using DataAccess.Interfaces;
+using Domain.Entities;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NetReviews.Controllers;
@@ -14,19 +16,37 @@ public class WeatherForecastController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly IDbContext _dbContext;
+    private readonly IUserDomainService _userDomainService;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IDbContext dbContext)
+    public WeatherForecastController(
+        ILogger<WeatherForecastController> logger,
+        IDbContext dbContext,
+        IUserDomainService userDomainService)
     {
         _logger = logger;
         _dbContext = dbContext;
+        _userDomainService = userDomainService;
     }
 
     [HttpGet("ping")]
-    public async Task<IActionResult> Ping(CancellationToken cancellationToken)
+    public async Task<IActionResult> Ping(string password, CancellationToken cancellationToken)
     {
-        _dbContext.UserRanks.Add(new() { Description = "Новый", Title = "Новый Title" });
+        //_dbContext.UserRanks.Add(new() { Description = "Новый", Title = "Новый Title" });
         
+        var hashedPassword = _userDomainService.HashPassword(password, out var salt);
+
+        var newUser = new User()
+        {
+            Email = "makklaud@mail.ru",
+            Nickname = "makklaud",
+            Password = hashedPassword,
+            Salt = salt,
+            UserRankId = new Guid("b5a4fe45-415a-4245-b392-19e5d0de8d0e")
+        };
+        
+        await _dbContext.Users.AddAsync(newUser, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
+        
         return Ok("pong");  
     }
 

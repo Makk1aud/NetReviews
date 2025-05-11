@@ -30,7 +30,9 @@ public class NetReviewsContext : DbContext, IDbContext
             .IsRequired();
         
         modelBuilder.Entity<User>().Property(x => x.Password)
-            .HasMaxLength(20)
+            .IsRequired();
+
+        modelBuilder.Entity<User>().Property(x => x.Salt)
             .IsRequired();
         
         modelBuilder.Entity<User>()

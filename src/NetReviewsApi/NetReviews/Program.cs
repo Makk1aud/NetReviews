@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddNetReviewsDbContext(builder.Configuration);
+builder.Services.AddDomainServices();
 
 
 builder.Services.AddControllers();

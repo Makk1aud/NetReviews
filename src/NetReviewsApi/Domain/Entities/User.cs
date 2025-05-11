@@ -16,11 +16,13 @@ public class User
     public string Email { get; set; }
     
     [Required]
-    [StringLength(20)]
     public string Password { get; set; }
+    
+    [Required]
+    public byte[] Salt { get; set; }
     
     [Required]
     public Guid UserRankId { get; set; }
 
-    public virtual UserRank UserRank { get; set; } = new();
+    public virtual UserRank UserRank { get; set; }
 }
