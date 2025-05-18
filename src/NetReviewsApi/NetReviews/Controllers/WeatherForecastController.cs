@@ -1,5 +1,6 @@
 using DataAccess.Interfaces;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,19 +33,18 @@ public class WeatherForecastController : ControllerBase
     public async Task<IActionResult> Ping(string password, CancellationToken cancellationToken)
     {
         //_dbContext.UserRanks.Add(new() { Description = "Новый", Title = "Новый Title" });
-        
-        var hashedPassword = _userDomainService.HashPassword(password, out var salt);
 
-        var newUser = new User()
+        var result = _dbContext.Authors.FirstOrDefault(x => x.AuthorType == AuthorTypes.Operator);
+        
+        var athor = new Author()
         {
-            Email = "makklaud@mail.ru",
-            Nickname = "makklaud",
-            Password = hashedPassword,
-            Salt = salt,
-            UserRankId = new Guid("b5a4fe45-415a-4245-b392-19e5d0de8d0e")
+            AuthorType = AuthorTypes.Operator,
+            Birthday = DateOnly.FromDateTime(DateTime.Now),
+            FirstName = "Operator 1",
+            LastName = "Operator 2"
         };
         
-        await _dbContext.Users.AddAsync(newUser, cancellationToken);
+        await _dbContext.Authors.AddAsync(athor, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
         
         return Ok("pong");  

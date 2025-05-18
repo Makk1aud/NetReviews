@@ -72,5 +72,10 @@ public class NetReviewsContext : DbContext, IDbContext
         modelBuilder.Entity<Author>()
             .Property(x => x.Birthday)
             .IsRequired();
+
+        modelBuilder.Entity<Author>()
+            .Property(x => x.AuthorType)
+            .HasConversion<string>()
+            .IsRequired();
     }
 }

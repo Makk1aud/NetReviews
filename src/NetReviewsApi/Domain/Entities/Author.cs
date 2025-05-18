@@ -17,7 +17,7 @@ public class Author
     public string LastName { get; set; }
     
     [Required]
-    public DateTime Birthday { get; set; }
+    public DateOnly Birthday { get; set; }
     
     [Required]
     public AuthorTypes AuthorType { get; set; }
