@@ -1,0 +1,33 @@
+services:
+  server-api:
+    container_name: server_api
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+#      - postgres_db
+      postgres_db:
+        condition: service_healthy
+        restart: true
+    ports:
+      - "8080:8080"
+  
+  
+  postgres_db:
+    image: postgres
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: UAZ9233
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+#    volumes:
+#      - pgdata:/var/lib/postgres/data
+    ports:
+      - "5433:5432"
+      

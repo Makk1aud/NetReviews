@@ -13,6 +13,13 @@ public static class ServiceCollectionsExtensions
         return services.AddDbContext<IDbContext, NetReviewsContext>(
             opt => opt.UseNpgsql(configurationManager.GetConnectionString("DefaultConnection")));
     }
+
+    public static void EnsureDbCreated(this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<NetReviewsContext>();
+        dbContext.Database.Migrate();
+    }
     
     public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
