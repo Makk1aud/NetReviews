@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using NetReviews.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddNetReviewsDbContext(builder.Configuration);
 builder.Services.AddDomainServices();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.Audience = "account";
+        options.MetadataAddress = "http://localhost:18080/realms/net-keycloak/.well-known/openid-configuration";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = "http://localhost:18080/realms/net-keycloak"
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -23,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
